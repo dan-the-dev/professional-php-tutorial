@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Auryn\Injector;
+use Doctrine\DBAL\Connection;
 use SocialNews\Framework\Rendering\TemplateDirectory;
 use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Framework\Rendering\TwigTemplateRendererFactory;
@@ -22,5 +23,17 @@ $injector->delegate( // delegate the creation of a specific object to the given 
         return $factory->create();
     }
 );
+
+$injector->define(
+    DatabaseUrl::class,
+    [':uri' => 'sqlite:///' . ROOT_DIR . '/storage/dbsqlite3']
+);
+
+$injector->delegate(Connection::class, function () use ($injector): Connection {
+    $factory = $injector->make(ConnectionFactory::class);
+    return $factory->create();
+});
+
+$injector->share(Connection::class);
 
 return $injector;
