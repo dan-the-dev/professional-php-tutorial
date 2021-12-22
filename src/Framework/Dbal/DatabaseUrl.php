@@ -1,5 +1,7 @@
 <?php
 
+namespace SocialNews\Framework\Dbal;
+
 final class DatabaseUrl
 {
     private string $url;

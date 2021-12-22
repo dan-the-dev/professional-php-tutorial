@@ -10,7 +10,8 @@
   },
   "autoload": {
     "psr-4": {
-      "SocialNews\\": "src/"
+      "SocialNews\\": "src/",
+      "Migrations\\": "migrations/"
     }
   }
 }

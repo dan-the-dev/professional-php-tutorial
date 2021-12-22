@@ -1,5 +1,7 @@
 <?php
 
+namespace SocialNews\Framework\Dbal;
+
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -16,7 +18,7 @@ final class ConnectionFactory
     public function create(): Connection
     {
         return DriverManager::getConnection(
-            ['url' => $this->databaseUrl->__toString()],
+            ['url' => $this->databaseUrl],
             new Configuration()
         );
     }
