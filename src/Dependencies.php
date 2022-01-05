@@ -10,8 +10,15 @@ use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Framework\Rendering\TwigTemplateRendererFactory;
 use SocialNews\FrontPage\Application\QuerySubmission;
 use SocialNews\FrontPage\Infrastructure\DbalSubmissionQuery;
+use SocialNews\Framework\Csrf\TokenStorage;
+use SocialNews\Framework\Csrf\SymfonySessionTokenStorage;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 $injector = new Injector();
+
+$injector->alias(TokenStorage::class, SymfonySessionTokenStorage::class); // binding interface to implementation we want to use
+$injector->alias(SessionInterface::class, Session::class); // binding interface to implementation we want to use
 
 $injector->alias(QuerySubmission::class, DbalSubmissionQuery::class); // binding interface to implementation we want to use
 $injector->share(QuerySubmission::class); // singleton
