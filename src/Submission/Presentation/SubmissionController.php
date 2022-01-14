@@ -47,7 +47,7 @@ final class SubmissionController
             return $response;
         }
 
-        $this->submitLinkHandler->handle(new SubmitLink($request->get('url'), $request->get('title')));
+        $this->submitLinkHandler->handle($form->toCommand());
 
         $this->session->getFlashBag()->add('success', 'Your URL was submitted successfully.');
         return $response;
