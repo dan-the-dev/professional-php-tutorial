@@ -16,14 +16,14 @@ use Symfony\Component\HttpFoundation\Session\Session;
 final class SubmissionController
 {
     private TemplateRenderer $templateRenderer;
-    private StoredTokenValidator $storedTokenValidator;
+    private SubmissionFormFactory $submissionFormFactory;
     private Session $session;
     private SubmitLinkHandler $submitLinkHandler;
 
-    public function __construct(TemplateRenderer $templateRenderer, StoredTokenValidator $storedTokenValidator, Session $session, SubmitLinkHandler $submitLinkHandler)
+    public function __construct(TemplateRenderer $templateRenderer, SubmissionFormFactory $submissionFormFactory, Session $session, SubmitLinkHandler $submitLinkHandler)
     {
         $this->templateRenderer = $templateRenderer;
-        $this->storedTokenValidator = $storedTokenValidator;
+        $this->submissionFormFactory = $submissionFormFactory;
         $this->session = $session;
         $this->submitLinkHandler = $submitLinkHandler;
     }
@@ -38,8 +38,12 @@ final class SubmissionController
     {
         $response = new RedirectResponse('/submit');
 
-        if (!$this->storedTokenValidator->validate('submission', new Token((string) $request->get('token')))) {
-            $this->session->getFlashBag()->add('errors', 'Invalid Token');
+        $form = $this->submissionFormFactory->createFromRequest($request);
+        if ($form->hasValidationErrors()) {
+            /** @var string $error */
+            foreach ($form->getValidationErrors() as $error) {
+                $this->session->getFlashBag()->add('errors', $error);
+            }
             return $response;
         }
 
