@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use SocialNews\FrontPage\Presentation\FrontPageController;
 use SocialNews\Submission\Presentation\SubmissionController;
+use SocialNews\User\Presentation\LoginController;
 use SocialNews\User\Presentation\RegistrationController;
 
 return [
@@ -30,5 +31,15 @@ return [
         'POST',
         '/register',
         RegistrationController::class . '#register',
+    ],
+    [
+        'GET',
+        '/login',
+        LoginController::class . '#show',
+    ],
+    [
+        'POST',
+        '/login',
+        LoginController::class . '#login',
     ],
 ];

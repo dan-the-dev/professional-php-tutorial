@@ -13,13 +13,25 @@ final class User
     private string $nickname;
     private string $passwordHash;
     private DateTimeImmutable $creationDate;
+    private int $failedLoginAttempts;
+    private ?DateTimeImmutable $lastFailedLoginAttempts;
+    private array $recordedEvents = [];
 
-    private function __construct(UuidInterface $id, string $nickname, string $passwordHash, DateTimeImmutable $creationDate)
+    public function __construct(
+        UuidInterface $id,
+        string $nickname,
+        string $passwordHash,
+        DateTimeImmutable $creationDate,
+        int $failedLoginAttempts,
+        ?DateTimeImmutable $lastFailedLoginAttempts
+    )
     {
         $this->id = $id;
         $this->nickname = $nickname;
         $this->passwordHash = $passwordHash;
         $this->creationDate = $creationDate;
+        $this->failedLoginAttempts = $failedLoginAttempts;
+        $this->lastFailedLoginAttempts = $lastFailedLoginAttempts;
     }
 
     public static function register(string $nickname, string $password): User
@@ -28,9 +40,41 @@ final class User
             Uuid::uuid4(),
             $nickname,
             password_hash($password, PASSWORD_DEFAULT),
-            new DateTimeImmutable()
+            new DateTimeImmutable(),
+            0,
+            null
         );
     }
+
+    public function login(string $password): void
+    {
+        if (!password_verify($password, $this->passwordHash)) {
+            $this->lastFailedLoginAttempts = new DateTimeImmutable();
+            $this->failedLoginAttempts++;
+            return;
+        }
+        $this->failedLoginAttempts = 0;
+        $this->lastFailedLoginAttempts = null;
+        $this->recordedEvents[] = new UserWasLoggedIn();
+
+    }
+
+    /**
+     * @return int
+     */
+    public function getFailedLoginAttempts(): int
+    {
+        return $this->failedLoginAttempts;
+    }
+
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getLastFailedLoginAttempts(): ?DateTimeImmutable
+    {
+        return $this->lastFailedLoginAttempts;
+    }
+
     /**
      * @return string
      */
@@ -60,5 +104,18 @@ final class User
     public function getId(): UuidInterface
     {
         return $this->id;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRecordedEvents(): array
+    {
+        return $this->recordedEvents;
+    }
+
+    public function clearRecordedEvents(): void
+    {
+        $this->recordedEvents = [];
     }
 }
