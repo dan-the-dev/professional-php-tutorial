@@ -65,11 +65,11 @@ final class DbalUserRepository implements UserRepository
     {
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('id');
-        $queryBuilder->select('nickname');
-        $queryBuilder->select('password_hash');
-        $queryBuilder->select('creation_date');
-        $queryBuilder->select('failed_login_attempts');
-        $queryBuilder->select('last_failed_login_attempts');
+        $queryBuilder->addSelect('nickname');
+        $queryBuilder->addSelect('password_hash');
+        $queryBuilder->addSelect('creation_date');
+        $queryBuilder->addSelect('failed_login_attempts');
+        $queryBuilder->addSelect('last_failed_login_attempts');
         $queryBuilder->from('users');
         $queryBuilder->where("nickname = {$queryBuilder->createNamedParameter($nickname)}");
         $statement = $queryBuilder->executeQuery();

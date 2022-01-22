@@ -5,7 +5,8 @@
     <ol>
         {% for submission in submissions %}
             <li>
-                <a href="{{ submission.url }}">{{ submission.title }}</a>
+                <a href="{{ submission.url }}">{{ submission.title }}</a><br>
+                <small>submitted by {{ submission.author }}</small>
             </li>
         {% endfor %}
     </ol>

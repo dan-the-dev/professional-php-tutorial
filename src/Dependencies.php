@@ -5,6 +5,8 @@ use Auryn\Injector;
 use Doctrine\DBAL\Connection;
 use SocialNews\Framework\Dbal\ConnectionFactory;
 use SocialNews\Framework\Dbal\DatabaseUrl;
+use SocialNews\Framework\Rbac\SymfonySessionCurrentUserFactory;
+use SocialNews\Framework\Rbac\User;
 use SocialNews\Framework\Rendering\TemplateDirectory;
 use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Framework\Rendering\TwigTemplateRendererFactory;
@@ -38,6 +40,14 @@ $injector->delegate( // delegate the creation of a specific object to the given 
     TemplateRenderer::class,
     function () use ($injector): TemplateRenderer {
         $factory = $injector->make(TwigTemplateRendererFactory::class);
+        return $factory->create();
+    }
+);
+
+$injector->delegate( // delegate the creation of a specific object to the given callable function
+    User::class,
+    function () use ($injector): User {
+        $factory = $injector->make(SymfonySessionCurrentUserFactory::class);
         return $factory->create();
     }
 );
