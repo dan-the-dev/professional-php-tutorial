@@ -5,6 +5,7 @@ namespace SocialNews\Submission\Presentation;
 
 use SocialNews\Framework\Csrf\StoredTokenValidator;
 use SocialNews\Framework\Csrf\Token;
+use SocialNews\Framework\Csrf\TokenKey;
 use SocialNews\Framework\Rbac\AuthenticatedUser;
 use SocialNews\Submission\Application\SubmitLink;
 
@@ -30,7 +31,7 @@ final class SubmissionForm
     {
         $errors = [];
 
-        if (!$this->storedTokenValidator->validate('submission', new Token($this->token))) {
+        if (!$this->storedTokenValidator->validate(new TokenKey('submission'), new Token($this->token))) {
             $errors[] = 'Invalid token';
         }
         if (strlen($this->title) < 1 || strlen($this->title) > 200) {

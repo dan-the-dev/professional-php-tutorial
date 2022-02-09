@@ -12,9 +12,9 @@ final class StoredTokenValidator
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function validate(string $key, Token $token): bool
+    public function validate(TokenKey $tokenKey, Token $token): bool
     {
-        $storedToken = $this->tokenStorage->retrieve($key);
+        $storedToken = $this->tokenStorage->retrieve($tokenKey->toString());
         if ($storedToken === null) {
             return false;
         }

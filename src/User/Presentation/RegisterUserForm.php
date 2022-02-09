@@ -5,6 +5,7 @@ namespace SocialNews\User\Presentation;
 
 use SocialNews\Framework\Csrf\StoredTokenValidator;
 use SocialNews\Framework\Csrf\Token;
+use SocialNews\Framework\Csrf\TokenKey;
 use SocialNews\User\Application\NicknameTakenQuery;
 use SocialNews\User\Application\RegisterUser;
 
@@ -32,7 +33,7 @@ final class RegisterUserForm
     {
         $errors = [];
 
-        if (!$this->storedTokenValidator->validate('registration', new Token($this->token))) {
+        if (!$this->storedTokenValidator->validate(new TokenKey('registration'), new Token($this->token))) {
             $errors[] = 'Invalid token';
         }
         if ($this->nicknameTakenQuery->execute($this->nickname)) {

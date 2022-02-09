@@ -6,6 +6,7 @@ namespace Tests\Framework\Csrf;
 use PHPUnit\Framework\TestCase;
 use SocialNews\Framework\Csrf\StoredTokenValidator;
 use SocialNews\Framework\Csrf\Token;
+use SocialNews\Framework\Csrf\TokenKey;
 use SocialNews\Framework\Csrf\TokenStorage;
 
 final class StoredTokenValidatorTest extends TestCase
@@ -20,7 +21,7 @@ final class StoredTokenValidatorTest extends TestCase
             ->with('test')
             ->willReturn(new Token('test-token'));
 
-        $actualResult = $storedTokenValidator->validate('test', new Token('test-token'));
+        $actualResult = $storedTokenValidator->validate(new TokenKey('test'), new Token('test-token'));
         $this->assertTrue($actualResult);
     }
 
@@ -34,7 +35,7 @@ final class StoredTokenValidatorTest extends TestCase
             ->with('test')
             ->willReturn(new Token('test-token'));
 
-        $actualResult = $storedTokenValidator->validate('test', new Token('test-token-2'));
+        $actualResult = $storedTokenValidator->validate(new TokenKey('test'), new Token('test-token-2'));
         $this->assertFalse($actualResult);
     }
 
@@ -48,7 +49,7 @@ final class StoredTokenValidatorTest extends TestCase
             ->with('test')
             ->willReturn(null);
 
-        $actualResult = $storedTokenValidator->validate('test', new Token('test-token'));
+        $actualResult = $storedTokenValidator->validate(new TokenKey('test'), new Token('test-token'));
         $this->assertFalse($actualResult);
     }
 }
