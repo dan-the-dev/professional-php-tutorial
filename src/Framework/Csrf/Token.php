@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace SocialNews\Framework\Csrf;
 
+use Exception;
+
 final class Token
 {
     private string $token;
@@ -18,7 +20,7 @@ final class Token
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public static function generate(): Token
     {
