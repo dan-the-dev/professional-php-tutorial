@@ -18,7 +18,7 @@ final class StoredTokenValidatorTest extends TestCase
 
         $tokenStorage->expects($this->once())
             ->method('retrieve')
-            ->with('test')
+            ->with(new TokenKey('test'))
             ->willReturn(new Token('test-token'));
 
         $actualResult = $storedTokenValidator->validate(new TokenKey('test'), new Token('test-token'));
@@ -32,7 +32,7 @@ final class StoredTokenValidatorTest extends TestCase
 
         $tokenStorage->expects($this->once())
             ->method('retrieve')
-            ->with('test')
+            ->with(new TokenKey('test'))
             ->willReturn(new Token('test-token'));
 
         $actualResult = $storedTokenValidator->validate(new TokenKey('test'), new Token('test-token-2'));
@@ -46,7 +46,7 @@ final class StoredTokenValidatorTest extends TestCase
 
         $tokenStorage->expects($this->once())
             ->method('retrieve')
-            ->with('test')
+            ->with(new TokenKey('test'))
             ->willReturn(null);
 
         $actualResult = $storedTokenValidator->validate(new TokenKey('test'), new Token('test-token'));

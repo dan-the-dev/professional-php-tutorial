@@ -37,7 +37,7 @@ final class StoredTokenReaderTest extends TestCase
 
         $tokenStorage->expects($this->once())
             ->method('retrieve')
-            ->with('test')
+            ->with(new TokenKey('test'))
             ->willReturn(new Token('test-token'));
 
         $actualToken = $storedTokenReader->read(new TokenKey('test'));
@@ -54,7 +54,7 @@ final class StoredTokenReaderTest extends TestCase
 
         $tokenStorage->expects($this->once())
             ->method('retrieve')
-            ->with('test')
+            ->with(new TokenKey('test'))
             ->willReturn(null);
 
         $tokenStorage->expects($this->once())

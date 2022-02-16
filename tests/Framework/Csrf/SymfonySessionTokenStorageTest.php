@@ -33,7 +33,7 @@ final class SymfonySessionTokenStorageTest extends TestCase
             ->with('test')
             ->willReturn('test-token');
 
-        $actualToken = $sessionTokenStorage->retrieve('test');
+        $actualToken = $sessionTokenStorage->retrieve(new TokenKey('test'));
         $this->assertEquals(new Token('test-token'), $actualToken);
     }
 
@@ -47,7 +47,7 @@ final class SymfonySessionTokenStorageTest extends TestCase
             ->with('test')
             ->willReturn(null);
 
-        $actualToken = $sessionTokenStorage->retrieve('test');
+        $actualToken = $sessionTokenStorage->retrieve(new TokenKey('test'));
         $this->assertNull($actualToken);
     }
 }

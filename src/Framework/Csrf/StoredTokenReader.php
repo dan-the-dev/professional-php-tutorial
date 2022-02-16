@@ -19,7 +19,7 @@ final class StoredTokenReader
      */
     public function read(TokenKey $tokenKey): Token
     {
-        $token = $this->tokenStorage->retrieve($tokenKey->toString());
+        $token = $this->tokenStorage->retrieve($tokenKey);
         if (!is_null($token)) {
             return $token;
         }

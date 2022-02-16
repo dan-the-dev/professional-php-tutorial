@@ -7,5 +7,5 @@ interface TokenStorage
 {
     public function store(TokenKey $tokenKey, Token $token): void;
 
-    public function retrieve(string $key): ?Token;
+    public function retrieve(TokenKey $tokenKey): ?Token;
 }
