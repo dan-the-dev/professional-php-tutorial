@@ -18,6 +18,6 @@ final class StoredTokenValidator
         if ($storedToken === null) {
             return false;
         }
-        return $token->tokenValue()->equals($storedToken);
+        return $token->valueEquals($storedToken);
     }
 }

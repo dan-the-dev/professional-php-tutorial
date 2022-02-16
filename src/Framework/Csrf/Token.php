@@ -30,5 +30,12 @@ final class Token
         return $this->tokenValue;
     }
 
-
+    /**
+     * @param TokenValue $anotherTokenValue
+     * @return bool
+     */
+    public function valueEquals(TokenValue $anotherTokenValue): bool
+    {
+        return $this->tokenValue->equals($anotherTokenValue);
+    }
 }
