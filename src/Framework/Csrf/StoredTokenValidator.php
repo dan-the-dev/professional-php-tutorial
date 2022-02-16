@@ -12,12 +12,12 @@ final class StoredTokenValidator
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function validate(TokenKey $tokenKey, TokenValue $token): bool
+    public function validate(Token $token): bool
     {
-        $storedToken = $this->tokenStorage->retrieve($tokenKey);
+        $storedToken = $this->tokenStorage->retrieve($token->tokenKey());
         if ($storedToken === null) {
             return false;
         }
-        return $token->equals($storedToken);
+        return $token->tokenValue()->equals($storedToken);
     }
 }

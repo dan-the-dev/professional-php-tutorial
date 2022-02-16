@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace SocialNews\User\Presentation;
 
 use SocialNews\Framework\Csrf\StoredTokenValidator;
+use SocialNews\Framework\Csrf\Token;
 use SocialNews\Framework\Csrf\TokenValue;
 use SocialNews\Framework\Csrf\TokenKey;
 use SocialNews\Framework\Rendering\TemplateRenderer;
@@ -44,10 +45,8 @@ final class LoginController
     {
         $this->session->remove('userId');
 
-        if (!$this->storedTokenValidator->validate(
-            new TokenKey('login'),
-            new TokenValue((string)$request->get('token'))
-        )) {
+        $token = $this->createToken($request);
+        if (!$this->storedTokenValidator->validate($token)) {
             $this->session->getFlashBag()->add('errors', 'Invalid token');
         }
 
@@ -63,5 +62,16 @@ final class LoginController
 
         $this->session->getFlashBag()->add('success', 'You were logged in.');
         return new RedirectResponse('/');
+    }
+
+    /**
+     * @param Request $request
+     * @return Token
+     */
+    private function createToken(Request $request): Token
+    {
+        $tokenKey = new TokenKey('login');
+        $tokenValue = new TokenValue((string)$request->get('token'));
+        return new Token($tokenKey, $tokenValue);
     }
 }
