@@ -24,18 +24,17 @@ final class StoredTokenReader
             return $token;
         }
 
-        return $this->generateToken($key);
+        return $this->generateToken(new TokenKey($key));
     }
 
     /**
-     * @param string $key
      * @return Token
      * @throws Exception
      */
-    public function generateToken(string $key): Token
+    public function generateToken(TokenKey $tokenKey): Token
     {
         $token = Token::generate();
-        $this->tokenStorage->store($key, $token);
+        $this->tokenStorage->store($tokenKey->toString(), $token);
         return $token;
     }
 }

@@ -7,6 +7,7 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use SocialNews\Framework\Csrf\StoredTokenReader;
 use SocialNews\Framework\Csrf\Token;
+use SocialNews\Framework\Csrf\TokenKey;
 use SocialNews\Framework\Csrf\TokenStorage;
 
 final class StoredTokenReaderTest extends TestCase
@@ -23,7 +24,7 @@ final class StoredTokenReaderTest extends TestCase
             ->method('store')
             ->with('test', $this->anything());
 
-        $storedTokenReader->generateToken('test');
+        $storedTokenReader->generateToken(new TokenKey('test'));
     }
 
     /**
