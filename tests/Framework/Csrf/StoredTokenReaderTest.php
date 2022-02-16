@@ -6,7 +6,7 @@ namespace Tests\Framework\Csrf;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use SocialNews\Framework\Csrf\StoredTokenReader;
-use SocialNews\Framework\Csrf\Token;
+use SocialNews\Framework\Csrf\TokenValue;
 use SocialNews\Framework\Csrf\TokenKey;
 use SocialNews\Framework\Csrf\TokenStorage;
 
@@ -38,10 +38,10 @@ final class StoredTokenReaderTest extends TestCase
         $tokenStorage->expects($this->once())
             ->method('retrieve')
             ->with(new TokenKey('test'))
-            ->willReturn(new Token('test-token'));
+            ->willReturn(new TokenValue('test-token'));
 
         $actualToken = $storedTokenReader->read(new TokenKey('test'));
-        $this->assertEquals(new Token('test-token'), $actualToken);
+        $this->assertEquals(new TokenValue('test-token'), $actualToken);
     }
 
     /**

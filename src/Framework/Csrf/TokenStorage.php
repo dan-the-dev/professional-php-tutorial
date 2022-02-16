@@ -5,7 +5,7 @@ namespace SocialNews\Framework\Csrf;
 
 interface TokenStorage
 {
-    public function store(TokenKey $tokenKey, Token $token): void;
+    public function store(TokenKey $tokenKey, TokenValue $token): void;
 
-    public function retrieve(TokenKey $tokenKey): ?Token;
+    public function retrieve(TokenKey $tokenKey): ?TokenValue;
 }

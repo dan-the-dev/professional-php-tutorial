@@ -3,32 +3,32 @@ declare(strict_types=1);
 
 namespace SocialNews\Framework\Csrf;
 
-use Exception;
-
 final class Token
 {
-    private string $token;
+    private TokenKey $tokenKey;
+    private TokenValue $tokenValue;
 
-    public function __construct(string $token)
+    public function __construct(TokenKey $tokenKey, TokenValue $tokenValue)
     {
-        $this->token = $token;
-    }
-
-    public function toString(): string
-    {
-        return $this->token;
+        $this->tokenKey = $tokenKey;
+        $this->tokenValue = $tokenValue;
     }
 
     /**
-     * @throws Exception
+     * @return TokenKey
      */
-    public static function generate(): Token
+    public function tokenKey(): TokenKey
     {
-        return new Token(bin2hex(random_bytes(256)));
+        return $this->tokenKey;
     }
 
-    public function equals(Token $anotherToken): bool
+    /**
+     * @return TokenValue
+     */
+    public function tokenValue(): TokenValue
     {
-        return $this->token === $anotherToken->token;
+        return $this->tokenValue;
     }
+
+
 }

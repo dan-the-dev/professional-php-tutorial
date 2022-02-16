@@ -17,7 +17,7 @@ final class StoredTokenReader
     /**
      * @throws Exception
      */
-    public function read(TokenKey $tokenKey): Token
+    public function read(TokenKey $tokenKey): TokenValue
     {
         $token = $this->tokenStorage->retrieve($tokenKey);
         if (!is_null($token)) {
@@ -28,12 +28,12 @@ final class StoredTokenReader
     }
 
     /**
-     * @return Token
+     * @return TokenValue
      * @throws Exception
      */
-    public function generateToken(TokenKey $tokenKey): Token
+    public function generateToken(TokenKey $tokenKey): TokenValue
     {
-        $token = Token::generate();
+        $token = TokenValue::generate();
         $this->tokenStorage->store($tokenKey, $token);
         return $token;
     }

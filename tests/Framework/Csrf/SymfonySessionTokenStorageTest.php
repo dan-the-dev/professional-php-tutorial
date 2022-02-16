@@ -5,7 +5,7 @@ namespace Tests\Framework\Csrf;
 
 use PHPUnit\Framework\TestCase;
 use SocialNews\Framework\Csrf\SymfonySessionTokenStorage;
-use SocialNews\Framework\Csrf\Token;
+use SocialNews\Framework\Csrf\TokenValue;
 use SocialNews\Framework\Csrf\TokenKey;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -20,7 +20,7 @@ final class SymfonySessionTokenStorageTest extends TestCase
             ->method('set')
             ->with('test', 'test-token');
 
-        $sessionTokenStorage->store(new TokenKey('test'), new Token('test-token'));
+        $sessionTokenStorage->store(new TokenKey('test'), new TokenValue('test-token'));
     }
 
     public function testItRetrieveTokenInSessionAndReturnIt(): void
@@ -34,7 +34,7 @@ final class SymfonySessionTokenStorageTest extends TestCase
             ->willReturn('test-token');
 
         $actualToken = $sessionTokenStorage->retrieve(new TokenKey('test'));
-        $this->assertEquals(new Token('test-token'), $actualToken);
+        $this->assertEquals(new TokenValue('test-token'), $actualToken);
     }
 
     public function testItDoesntRetrieveTokenInSessionAndReturnNull(): void
