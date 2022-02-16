@@ -17,14 +17,14 @@ final class StoredTokenReader
     /**
      * @throws Exception
      */
-    public function read(string $key): Token
+    public function read(TokenKey $tokenKey): Token
     {
-        $token = $this->tokenStorage->retrieve($key);
+        $token = $this->tokenStorage->retrieve($tokenKey->toString());
         if (!is_null($token)) {
             return $token;
         }
 
-        return $this->generateToken(new TokenKey($key));
+        return $this->generateToken($tokenKey);
     }
 
     /**

@@ -31,7 +31,7 @@ final class TwigTemplateRendererFactory
         $twigEnvironment->addFunction(
             new TwigFunction(
                 'get_token', function (string $key): string {
-                    $token = $this->storedTokenReader->read($key);
+                    $token = $this->storedTokenReader->read();
                     return $token->toString();
                 }
             )

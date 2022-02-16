@@ -40,7 +40,7 @@ final class StoredTokenReaderTest extends TestCase
             ->with('test')
             ->willReturn(new Token('test-token'));
 
-        $actualToken = $storedTokenReader->read('test');
+        $actualToken = $storedTokenReader->read(new TokenKey('test'));
         $this->assertEquals(new Token('test-token'), $actualToken);
     }
 
@@ -61,6 +61,6 @@ final class StoredTokenReaderTest extends TestCase
             ->method('store')
             ->with('test', $this->anything());
 
-        $storedTokenReader->read('test');
+        $storedTokenReader->read(new TokenKey('test'));
     }
 }
